@@ -17,6 +17,6 @@ public class MainController {
     @GetMapping
     @ResponseBody
     public String home() {
-        return "Bonjour Armelle";
+        return "Hello World !";
     }
 }
