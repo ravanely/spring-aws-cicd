@@ -154,6 +154,6 @@ public class Category {
         if (id == null || image == null) return "/images/image-thumbnail.png";
 
         //return "/user-photos/" + this.id + "/" + this.photos;
-        return "/ShopmeWebParent/category-images/" + this.id + "/" + this.image;
+        return "/category-images/" + this.id + "/" + this.image;
     }
 }
