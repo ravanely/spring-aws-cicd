@@ -1,5 +1,7 @@
 package cm.nsi.saarngan.repository;
 
+
+import cm.nsi.saarngan.entity.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * saar-ngan
  **/
 @Repository
-public interface RoleRepository extends CrudRepository<RoleRepository, Integer> {
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 }

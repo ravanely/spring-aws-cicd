@@ -4,15 +4,13 @@ import javax.persistence.*;
 import java.util.Objects;
 
 /**
- * @Author :  NAGUE
- * @Mailto :  nagueravanely@gmail.com
- * @Created :  22/10/2021, vendredi
+ * created by : Ravanely
+ * create at : 05/04/2022, 12:29, mar.
+ * saar-ngan
  **/
-
 @Entity
 @Table(name = "roles")
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
