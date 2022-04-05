@@ -1,4 +1,4 @@
-package cm.nsi.saarngan;
+package cm.nsi.saarngan.repository;
 
 import cm.nsi.saarngan.entity.User;
 import org.springframework.data.domain.Page;
