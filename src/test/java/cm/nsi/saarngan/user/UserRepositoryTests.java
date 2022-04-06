@@ -37,7 +37,7 @@ public class UserRepositoryTests {
         assertThat(savedUser.getId()).isGreaterThan(0);
     }
 
-    /*@Test
+   /* @Test
     public void testCreateNewUserWithTwoRole() {
         User userRavi = new User("ravi@gmail.com", "ravi2020", "Ravi", "Kumar");
         Role roleEditor = new Role(3);
@@ -82,15 +82,14 @@ public class UserRepositoryTests {
         userRavi.addRole(roleSalesperson);
 
         repo.save(userRavi);
-    }
-*/
+    }*/
     /*@Test
     public void testDeleteUser() {
         Integer userId = 2;
         repo.deleteById(userId);
     }*/
 
-    /*@Test
+   /* @Test
     public void testGetUserByEmail() {
         String email = "toto@toto.com";
         User user = repo.getUserByEmail(email);
