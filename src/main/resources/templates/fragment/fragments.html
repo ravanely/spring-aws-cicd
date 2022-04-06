@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Fragment</title>
+</head>
+<body>
+
+<th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
+    <a class="text-white"
+       th:href="@{'/users/page/'+ ${currentPage} + '?sortField=' + ${fieldName} + '&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${columnLabel}]]
+    </a>
+
+    <span th:class="${sortDir == 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down'}" th:if="${sortField == fieldName}"></span>
+</th>
+
+<a class="page-link" th:fragment="page_link(pageNum, label)"
+   th:href="@{'/users/page/' + ${pageNum} + '?sortField=' +${sortField} + '&sortDir=' + ${sortDir}+ ${keyword != null ? '&keyword=' + keyword : ''}}">
+    [[${label}]]</a>
+
+<head th:fragment="page_head(title)">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>[[${title}]]</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/fontawesome/all.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+</head>
+
+<div th:fragment="script-js">
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/common.js}" type="text/javascript"></script>
+</div>
+
+<div class="m-3 text-center" th:fragment="footer">
+    <p>Shopme Control Panel - Copyright &copy; Shopme</p>
+</div>
+
+</body>
+</html>

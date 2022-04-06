@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * saar-ngan
  **/
 @Controller
-@RequestMapping("")
 public class MainController {
 
-    @GetMapping
-    @ResponseBody
-    public String home() {
-        return "Bonjour Billy";
+    @GetMapping("")
+    public String viewHomePage() {
+        return "index";
+    }
+
+    @GetMapping("/login")
+    public String viewLoginPage() {
+        return "login";
     }
 }

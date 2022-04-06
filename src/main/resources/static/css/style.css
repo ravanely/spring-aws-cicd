@@ -1,0 +1,58 @@
+*.icon-white {
+    color: white
+}
+
+*.icon-silver {
+    color: silver
+}
+
+*.icon-green {
+    color: green
+}
+
+*.icon-dark {
+    color: gray
+}
+
+*.icon-red {
+    color: red;
+}
+
+*.icon-darkred {
+    color: darkred;
+}
+
+th, td {
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    /* smmall screen */
+    div.full-details {
+        display: none;
+    }
+
+    div.full-less {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* small screen */
+    div.full-details {
+        display: block;
+    }
+
+    div.less-details {
+        display: none;
+    }
+    .hideable-column{display: none;}
+}
+
+@media screen and (min-width: 1024px) {
+    /* smmall screen */
+    div.less-details {
+        display: none;
+    }
+    .hideable-column{display: table-cell;}
+}

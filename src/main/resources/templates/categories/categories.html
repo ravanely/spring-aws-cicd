@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment/fragments::page_head('Categories - Shopme Admin')"/>
+
+<body>
+<div class="container-fluid">
+    <div th:replace="fragment/navigation::menu"></div>
+
+    <div class="mb-2">
+        <h1>Manage Categories</h1>
+        <a th:href="@{/categories/new}"><i class="fa fa-folder-plus fa-2x" title="Create new Category"></i></a>
+        &nbsp;|&nbsp; <a th:href="@{/categories/export/csv}"><i class="fa fa-file-csv icon-green fa-2x"
+                                                                title="Export do CSV"></i></a>
+    </div>
+
+    <div class="alert alert-success text-center" th:if="${message != null}">[[${message}]]</div>
+
+    <div>
+        <form class="form-inline mb-md-3" th:action="@{/categories/page/1}">
+            <input name="sortField" th:value="${sortField}" type="hidden"/>
+            <input name="sortDir" th:value="${sortDir}" type="hidden"/>
+
+            Filter : &nbsp; <input class="form-control" name="keyword" required type="search"/>&nbsp;&nbsp;
+            <button class="btn btn-primary" type="submit" value="search"><i class="fa fa-search"></i></button>
+            &nbsp;&nbsp;
+            <button class="btn btn-secondary" onclick="clearFilter()" type="button"><i class="fa fa-eraser"></i>
+            </button>
+        </form>
+    </div>
+
+    <div class="full-details">
+        <table class="table table-responsive-xl table-striped table-hover table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Category Image</th>
+                <th th:replace="fragment/fragments::column_link('name','Category Name', 'none')"/>
+                <th class="hideable-column">Alias</th>
+                <th>Enabled</th>
+                <th>Actions</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <tr th:each="category : ${listCategories}">
+                <td>[[${category.id}]]</td>
+                <td>
+<!--                    <span class="fa fa-portrait fa-2x icon-dark" th:if="${category.image == null}"></span>-->
+                    <img style="width: 60px;" th:alt="${category.image}" th:src="@{${category.imagePath}}" class="img-fluid"/>
+                </td>
+                <td>[[${category.name}]]</td>
+                <td class="hideable-column">[[${category.alias}]]</td>
+                <td>
+                    <a class="fa fa-check-circle fa-2x icon-green"
+                       th:href="@{'/categories/'+${category.id}+'/enabled/false'}"
+                       th:if="${category.enabled == true}" title="Disable this category"></a>
+                    <a class="fa fa-circle fa-2x icon-darkred"
+                       th:href="@{'/categories/'+${category.id}+'/enabled/true'}"
+                       th:if="${category.enabled == false}" title="Enable this category"></a>
+                </td>
+                <td>
+                    <a class="fa fa-edit fa-2x icon-green" th:href="@{'/categories/edit/'+${category.id}}"
+                       title="Edit this category"></a>&nbsp;&nbsp;
+                    <a class="fa fa-trash fa-2x icon-darkred link-delete"
+                       th:href="@{'/categories/delete/'+${category.id}}"
+                       th:categoryId="${category.id}" title="Delete this categories"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="less-details">
+        <div class="row m-1" th:each="category : ${listCategories}">
+            <div class="col-4">
+                <span class="fa fa-portrait fa-3x icon-silver" th:if="${category.image == null}"></span>
+                <img style="width: 100px;" th:alt="${category.image}" th:if="${category.image != null}"
+                     th:src="@{${category.imagePath}}"/>
+            </div>
+            <div class="col-8">
+                <div>[[${category.name}]]</div>
+                <div class="mt-2">
+                    <a class="fa fa-check-circle fa-2x icon-green"
+                       th:href="@{'/categories/'+${category.id}+'/enabled/false'}"
+                       th:if="${category.enabled == true}" title="Disable this categories"></a>&nbsp;
+                    <a class="fa fa-circle fa-2x icon-darkred"
+                       th:href="@{'/categories/'+${category.id}+'/enabled/true'}"
+                       th:if="${category.enabled == false}" title="Enable this category"></a>&nbsp;
+
+                    <a class="fa fa-edit fa-2x icon-green" th:href="@{'/categories/edit/'+${category.id}}"
+                       title="Edit this categories"></a>&nbsp;&nbsp;
+                    <a class="fa fa-trash fa-2x icon-darkred link-delete"
+                       th:href="@{'/categories/delete/'+${category.id}}"
+                       th:categoryId="${category.id}" title="Delete this category"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center m-1" th:if="${totalItems > 0}">
+        <span>Showing categories # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+    </div>
+
+
+    <div class="text-center m-1" th:unless="${totalItems > 0}">
+        <span>No categories found</span>
+    </div>
+
+    <div th:if="${totalPages > 1}">
+        <nav>
+            <ul class="pagination justify-content-center flex-wrap">
+                <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                    <a th:replace="fragment/fragments::page_link(1, 'First')"></a>
+                </li>
+                <li class="page-item" th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                    <a th:replace="fragment/fragments::page_link(${currentPage - 1}, 'Previous')"></a>
+                </li>
+
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i : ${#numbers.sequence(1,totalPages)}">
+                    <a th:replace="fragment/fragments::page_link(${i}, ${i})"></a>
+                </li>
+
+                <li class="page-item" th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                    <a th:replace="fragment/fragments::page_link(${currentPage + 1}, 'Next')"></a>
+                </li>
+                <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                    <a th:replace="fragment/fragments::page_link(${totalPages}, 'Last')"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="modal fade text-center" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Confirmation</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+
+                <div class="modal-body"><span id="confirmText"></span></div>
+
+                <div class="modal-footer">
+                    <a class="btn btn-success" href="" id="yesButton">Yes</a>
+                    <button class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragment/fragments::footer"></div>
+</div>
+
+<div th:replace="fragment/fragments::script-js"/>
+
+<script>
+    $(document).ready(function () {
+        $(".link-delete").on("click", function (e) {
+            e.preventDefault();
+            link = $(this);
+
+            categoryId = link.attr("categoryId");
+            $("#yesButton").attr("href", link.attr("href"));
+            $("#confirmText").text("Are you sure you want to delete this category ID " + categoryId + " ?");
+            $("#confirmModal").modal();
+        });
+    });
+
+    function clearFilter() {
+        window.location = "[[@{/categories}]]"
+    }
+</script>
+</body>
+</html>
