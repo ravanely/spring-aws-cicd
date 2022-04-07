@@ -31,7 +31,7 @@ public class SaarLoader implements CommandLineRunner {
         if (userRepo.count() == 0L) {
 
             Role adminRole = roleRepo.save(new Role("Admin", "Manage Everything"));
-            User adminUser = new User("nam@codejava.net", "nam2020", "Nam", "Ha Minh");
+            User adminUser = new User("admin@admin.net", "admin2020", "Admin", "Administrator");
             adminUser.addRole(adminRole);
             adminUser.setEnabled(true);
             userService.save(adminUser);
